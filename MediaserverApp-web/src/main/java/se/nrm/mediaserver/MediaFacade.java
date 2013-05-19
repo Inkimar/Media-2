@@ -56,7 +56,7 @@ public class MediaFacade extends HttpServlet {
         MediaService bean = null;
         try {
             Properties jndiProps = new Properties();
-            jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "172.16.34.31");
+            jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.10.139");
             Context ctx = new InitialContext(jndiProps);
             bean = (MediaService) ctx.lookup("java:global/MediaserverApp-ejb/MediaServiceBean"); // 
 
