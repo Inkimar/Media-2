@@ -1,14 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.nrm.mediaserver;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Properties;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import se.nrm.mediaserver.domain.MediaService;
 import se.nrm.mediaserver.entity.Image;
 import se.nrm.mediaserver.entity.Media;
+import se.nrm.mediaserver.util.BeanService;
 
 /**
  *
@@ -47,8 +41,8 @@ public class Testing extends HttpServlet {
             out.println("<title>Servlet Testing</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>11:04 Testing at " + request.getContextPath() + "</h1>");
-            MediaService outreach = this.outreach();
+            MediaService outreach = BeanService.getBean();
+
             out.println("<h1>11:04 Testing at " + outreach + "</h1>");
             out.println("<h1>11:04 Testing at " + outreach.test() + "</h1>");
             Media media = this.get();
@@ -66,21 +60,6 @@ public class Testing extends HttpServlet {
         media.setFilename("Butterfly-13Maj-kl1525.jpg");
         media.setOwner("Larssons");
         return media;
-    }
-
-    private MediaService outreach() {
-        MediaService bean = null;
-        try {
-            Properties jndiProps = new Properties();
-            jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.10.139"); // 192.168.10.139 , 172.16.34.31
-            Context ctx = new InitialContext(jndiProps);
-            //   bean = (MediaService) ctx.lookup("java:global/MediaserverApp-ejb/MediaServiceBean"); // 
-            bean = (MediaService) ctx.lookup("java:global/MediaserverApp-ejb/MediaServiceBean!se.nrm.mediaserver.domain.MediaService");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bean;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

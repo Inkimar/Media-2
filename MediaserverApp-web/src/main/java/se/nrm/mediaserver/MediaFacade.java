@@ -1,14 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.nrm.mediaserver;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Properties;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import se.nrm.mediaserver.domain.MediaService;
 import se.nrm.mediaserver.entity.Image;
 import se.nrm.mediaserver.entity.Media;
+import se.nrm.mediaserver.util.BeanService;
 
 /**
  *
@@ -31,11 +25,11 @@ public class MediaFacade extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
        
-        MediaService service = this.outreach();
+        MediaService service = BeanService.getBean();
         Media media = new Image();
         media.setFilename("Butterfly-8Maj-kl1525.jpg");
         media.setOwner("Larssons");
-        service.save(media);
+        // service.save(media);
        
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -43,28 +37,13 @@ public class MediaFacade extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>MediaFacade :: 15:57</title>");
-            out.println("<h1>16:21 Testing at " + service.test() + "</h1>");
+            out.println("<h1>22:36 Testing at " + service.test() + "</h1>");
             out.println("</head>");
             out.println("</body>");
             out.println("</html>");
         } finally {
             out.close();
         }
-    }
-
-    private MediaService outreach() {
-        MediaService bean = null;
-        try {
-            Properties jndiProps = new Properties();
-            jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.10.139");
-            Context ctx = new InitialContext(jndiProps);
-            bean = (MediaService) ctx.lookup("java:global/MediaserverApp-ejb/MediaServiceBean"); // 
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bean;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
