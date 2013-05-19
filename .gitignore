@@ -4,3 +4,6 @@
 *.jar
 *.war
 *.ear
+/Domain/target/
+/MediaserverApp-ejb/target/
+/MediaserverApp-web/target/
