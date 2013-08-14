@@ -26,9 +26,12 @@ public class App {
 
     private static MediaService fetchBean() throws NamingException {
         Properties jndiProps = new Properties();
-        jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "172.16.34.31"); // 172.16.34.31 , 192.168.10.163 , 127.0.0.1
+        String ipAtHome = " 192.168.10.163";
+        jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", ipAtHome); // 172.16.34.31 , 192.168.10.163 , 127.0.0.1
         Context ctx = new InitialContext(jndiProps);
-        MediaService bean = (MediaService) ctx.lookup("java:global/MediaserverApp-ejb/MediaServiceBean");
+        String name="java:global/se.nrm.mediaserver_MediaserverApp-ejb_ejb_1.0-SNAPSHOT/MediaServiceBean!se.nrm.mediaserver.domain.MediaService";
+        String orgName="java:global/MediaserverApp-ejb/MediaServiceBean";
+        MediaService bean = (MediaService) ctx.lookup(name);
         return bean;
     }
 }

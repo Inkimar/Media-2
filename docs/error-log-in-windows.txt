@@ -1,0 +1,111 @@
+Trying from the same-machine: Windows-to-windows :
+
+Windows:
+EJB deployed in Glassfish
+This is the JNDI-message from server.log
+ Timestamp
+	
+2013-aug-14 13:56:56.419
+Log Level
+	
+INFO
+Logger
+	
+javax.enterprise.system.container.ejb.com.sun.ejb.containers
+Name-Value Pairs
+	
+_ThreadID=112;_ThreadName=Thread-2;
+Record Number
+	
+2410
+Message ID
+	
+EJB5181
+Complete Message
+	
+Portable JNDI names for EJB MediaServiceBean: [java:global/se.nrm.mediaserver_MediaserverApp-ejb_ejb_1.0-SNAPSHOT/MediaServiceBean, java:global/se.nrm.mediaserver_MediaserverApp-ejb_ejb_1.0-SNAPSHOT/MediaServiceBean!se.nrm.mediaserver.domain.MediaService]
+
+Client run and this is the error log:
+
+Start 15:04: Hej världen!
+org.omg.CORBA.COMM_FAILURE: FINE: IOP00410001: Connection failure: socketType: IIOP_CLEAR_TEXT; hostname:  192.168.10.163; port: 3700  vmcid: OMG  minor code: 1  completed: No
+	at sun.reflect.GeneratedConstructorAccessor27.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at com.sun.corba.ee.spi.orbutil.logex.corba.CorbaExtension.makeException(CorbaExtension.java:248)
+	at com.sun.corba.ee.spi.orbutil.logex.corba.CorbaExtension.makeException(CorbaExtension.java:95)
+	at com.sun.corba.ee.spi.orbutil.logex.WrapperGenerator.handleFullLogging(WrapperGenerator.java:387)
+	at com.sun.corba.ee.spi.orbutil.logex.WrapperGenerator.access$400(WrapperGenerator.java:107)
+	at com.sun.corba.ee.spi.orbutil.logex.WrapperGenerator$2.invoke(WrapperGenerator.java:511)
+	at com.sun.corba.ee.spi.orbutil.proxy.CompositeInvocationHandlerImpl.invoke(CompositeInvocationHandlerImpl.java:99)
+	at $Proxy26.connectFailure(Unknown Source)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelConnectionImpl.<init>(SocketOrChannelConnectionImpl.java:257)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelConnectionImpl.<init>(SocketOrChannelConnectionImpl.java:270)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelContactInfoImpl.createConnection(SocketOrChannelContactInfoImpl.java:129)
+	at com.sun.corba.ee.impl.protocol.CorbaClientRequestDispatcherImpl.beginRequest(CorbaClientRequestDispatcherImpl.java:223)
+	at com.sun.corba.ee.impl.protocol.CorbaClientDelegateImpl.request(CorbaClientDelegateImpl.java:228)
+	at com.sun.corba.ee.impl.protocol.CorbaClientDelegateImpl.is_a(CorbaClientDelegateImpl.java:393)
+	at org.omg.CORBA.portable.ObjectImpl._is_a(ObjectImpl.java:130)
+	at org.omg.CosNaming.NamingContextHelper.narrow(NamingContextHelper.java:69)
+	at com.sun.enterprise.naming.impl.SerialContext$ProviderCacheKey.getNameService(SerialContext.java:1241)
+	at com.sun.enterprise.naming.impl.SerialContext.getRemoteProvider(SerialContext.java:411)
+	at com.sun.enterprise.naming.impl.SerialContext.getProvider(SerialContext.java:347)
+	at com.sun.enterprise.naming.impl.SerialContext.lookup(SerialContext.java:504)
+	at com.sun.enterprise.naming.impl.SerialContext.lookup(SerialContext.java:455)
+	at javax.naming.InitialContext.lookup(InitialContext.java:411)
+	at se.testing.maven.j2se.client.App.fetchBean(App.java:32)
+	at se.testing.maven.j2se.client.App.main(App.java:19)
+Caused by: java.lang.RuntimeException: java.nio.channels.UnresolvedAddressException
+	at org.glassfish.enterprise.iiop.impl.IIOPSSLSocketFactory.createSocket(IIOPSSLSocketFactory.java:340)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelConnectionImpl.<init>(SocketOrChannelConnectionImpl.java:242)
+	... 15 more
+Caused by: java.nio.channels.UnresolvedAddressException
+	at sun.nio.ch.Net.checkAddress(Net.java:85)
+	at sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:597)
+	at com.sun.corba.ee.impl.orbutil.ORBUtility.openSocketChannel(ORBUtility.java:110)
+	at org.glassfish.enterprise.iiop.impl.IIOPSSLSocketFactory.createSocket(IIOPSSLSocketFactory.java:325)
+	... 16 more
+javax.naming.NamingException: Lookup failed for 'java:global/MediaserverApp-ejb/MediaServiceBean' in SerialContext[myEnv={java.naming.factory.initial=com.sun.enterprise.naming.impl.SerialInitContextFactory, org.omg.CORBA.ORBInitialHost= 192.168.10.163, java.naming.factory.state=com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl, java.naming.factory.url.pkgs=com.sun.enterprise.naming} [Root exception is javax.naming.NamingException: Unable to acquire SerialContextProvider for SerialContext[myEnv={java.naming.factory.initial=com.sun.enterprise.naming.impl.SerialInitContextFactory, org.omg.CORBA.ORBInitialHost= 192.168.10.163, java.naming.factory.state=com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl, java.naming.factory.url.pkgs=com.sun.enterprise.naming} [Root exception is org.omg.CORBA.COMM_FAILURE: FINE: IOP00410001: Connection failure: socketType: IIOP_CLEAR_TEXT; hostname:  192.168.10.163; port: 3700  vmcid: OMG  minor code: 1  completed: No]]
+	at com.sun.enterprise.naming.impl.SerialContext.lookup(SerialContext.java:518)
+	at com.sun.enterprise.naming.impl.SerialContext.lookup(SerialContext.java:455)
+	at javax.naming.InitialContext.lookup(InitialContext.java:411)
+	at se.testing.maven.j2se.client.App.fetchBean(App.java:32)
+	at se.testing.maven.j2se.client.App.main(App.java:19)
+Caused by: javax.naming.NamingException: Unable to acquire SerialContextProvider for SerialContext[myEnv={java.naming.factory.initial=com.sun.enterprise.naming.impl.SerialInitContextFactory, org.omg.CORBA.ORBInitialHost= 192.168.10.163, java.naming.factory.state=com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl, java.naming.factory.url.pkgs=com.sun.enterprise.naming} [Root exception is org.omg.CORBA.COMM_FAILURE: FINE: IOP00410001: Connection failure: socketType: IIOP_CLEAR_TEXT; hostname:  192.168.10.163; port: 3700  vmcid: OMG  minor code: 1  completed: No]
+	at com.sun.enterprise.naming.impl.SerialContext.getProvider(SerialContext.java:352)END: Hej världen!
+
+	at com.sun.enterprise.naming.impl.SerialContext.lookup(SerialContext.java:504)
+	... 4 more
+Caused by: org.omg.CORBA.COMM_FAILURE: FINE: IOP00410001: Connection failure: socketType: IIOP_CLEAR_TEXT; hostname:  192.168.10.163; port: 3700  vmcid: OMG  minor code: 1  completed: No
+	at sun.reflect.GeneratedConstructorAccessor27.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+	at com.sun.corba.ee.spi.orbutil.logex.corba.CorbaExtension.makeException(CorbaExtension.java:248)
+	at com.sun.corba.ee.spi.orbutil.logex.corba.CorbaExtension.makeException(CorbaExtension.java:95)
+	at com.sun.corba.ee.spi.orbutil.logex.WrapperGenerator.handleFullLogging(WrapperGenerator.java:387)
+	at com.sun.corba.ee.spi.orbutil.logex.WrapperGenerator.access$400(WrapperGenerator.java:107)
+	at com.sun.corba.ee.spi.orbutil.logex.WrapperGenerator$2.invoke(WrapperGenerator.java:511)
+	at com.sun.corba.ee.spi.orbutil.proxy.CompositeInvocationHandlerImpl.invoke(CompositeInvocationHandlerImpl.java:99)
+	at $Proxy26.connectFailure(Unknown Source)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelConnectionImpl.<init>(SocketOrChannelConnectionImpl.java:257)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelConnectionImpl.<init>(SocketOrChannelConnectionImpl.java:270)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelContactInfoImpl.createConnection(SocketOrChannelContactInfoImpl.java:129)
+	at com.sun.corba.ee.impl.protocol.CorbaClientRequestDispatcherImpl.beginRequest(CorbaClientRequestDispatcherImpl.java:223)
+	at com.sun.corba.ee.impl.protocol.CorbaClientDelegateImpl.request(CorbaClientDelegateImpl.java:228)
+	at com.sun.corba.ee.impl.protocol.CorbaClientDelegateImpl.is_a(CorbaClientDelegateImpl.java:393)
+	at org.omg.CORBA.portable.ObjectImpl._is_a(ObjectImpl.java:130)
+	at org.omg.CosNaming.NamingContextHelper.narrow(NamingContextHelper.java:69)
+	at com.sun.enterprise.naming.impl.SerialContext$ProviderCacheKey.getNameService(SerialContext.java:1241)
+	at com.sun.enterprise.naming.impl.SerialContext.getRemoteProvider(SerialContext.java:411)
+	at com.sun.enterprise.naming.impl.SerialContext.getProvider(SerialContext.java:347)
+	... 5 more
+Caused by: java.lang.RuntimeException: java.nio.channels.UnresolvedAddressException
+	at org.glassfish.enterprise.iiop.impl.IIOPSSLSocketFactory.createSocket(IIOPSSLSocketFactory.java:340)
+	at com.sun.corba.ee.impl.transport.SocketOrChannelConnectionImpl.<init>(SocketOrChannelConnectionImpl.java:242)
+	... 15 more
+Caused by: java.nio.channels.UnresolvedAddressException
+	at sun.nio.ch.Net.checkAddress(Net.java:85)
+	at sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:597)
+	at com.sun.corba.ee.impl.orbutil.ORBUtility.openSocketChannel(ORBUtility.java:110)
+	at org.glassfish.enterprise.iiop.impl.IIOPSSLSocketFactory.createSocket(IIOPSSLSocketFactory.java:325)
+	... 16 more
